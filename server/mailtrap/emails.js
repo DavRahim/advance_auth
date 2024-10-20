@@ -22,3 +22,25 @@ export const sendVerificationEmail = async (email, verificationToken) => {
         throw new Error(`Error sending verification email: ${error}`);
     }
 };
+
+export const sendWelcomeEmail = async (email, name) => {
+    const recipient = [{ email }];
+
+    try {
+        const response = await mailtrapClient.send({
+            from: sender,
+            to: recipient,
+            template_uuid: "fd69db9a-a3fc-4e81-9c57-42c2f4e14cd2",
+            template_variables: {
+                company_info_name: "Auth Company",
+                name: name,
+            },
+        });
+
+        console.log("Welcome email sent successfully", response);
+    } catch (error) {
+        console.error(`Error sending welcome email`, error);
+
+        throw new Error(`Error sending welcome email: ${error}`);
+    }
+};
