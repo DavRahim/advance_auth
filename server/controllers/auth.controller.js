@@ -2,7 +2,7 @@ import bcryptjs from "bcryptjs";
 import crypto from "crypto";
 import { User } from "../models/user.model.js";
 import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie.js";
-import { sendVerificationEmail } from "../mailtrap/emails.js";
+import { sendVerificationEmail, sendWelcomeEmail } from "../mailtrap/emails.js";
 
 
 export const signup = async (req, res) => {
@@ -83,6 +83,12 @@ export const verifyEmail = async (req, res) => {
         res.status(500).json({ success: false, message: "Server error" });
     }
 };
+
+export const logout = async (req, res) => {
+    res.clearCookie("token");
+    res.status(200).json({ success: true, message: "Logged out successfully" });
+};
+
 
 export const login = async (req, res) => {
     const { email, password } = req.body;
